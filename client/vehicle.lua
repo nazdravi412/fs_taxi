@@ -48,7 +48,7 @@ function CreateTaxi(x, y, z)
 			end
 
 			if not DoesEntityExist(taxiVeh) then
-				local _, vector = GetNthClosestVehicleNode(x, y, z, math.random(5, 10), 0, 0, 0)
+				local _, vector = GetNthClosestVehicleNode(x, y, z, math.random(25, 50), 0, 0, 0)
 				-- GetClosestVehicleNodeWithHeading(x, y, z, outPosition, outHeading, nodeType, p6, p7)
 				local sX, sY, sZ = table.unpack(vector)
 
@@ -60,6 +60,7 @@ function CreateTaxi(x, y, z)
 
 				SetEntityAsMissionEntity(taxiVeh, true, true)
 				SetVehicleEngineOn(taxiVeh, true, true, false)
+				SetVehicleFuelLevel(taxiVeh, 100.0)
 
 				local blip = AddBlipForEntity(taxiVeh)
 				SetBlipSprite(blip, 198)
