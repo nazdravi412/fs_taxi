@@ -51,6 +51,7 @@ RegisterCommand('taxi', function()
 	if not DoesEntityExist(taxiVeh) then 
 		if not IsPedInAnyVehicle(playerPed, false) or not IsPedInAnyTaxi(playerPed) then
 			Px, Py, Pz = table.unpack(GetEntityCoords(playerPed))
+			local __, roadNode = GetClosestVehicleNode(Px, Py, Pz, 1, 3.0, 0)
 
 			taxiVeh = CreateTaxi(Px, Py, Pz)
 			while not DoesEntityExist(taxiVeh) do
@@ -62,7 +63,7 @@ RegisterCommand('taxi', function()
 				Wait(1)
 			end
 
-			TaskVehicleDriveToCoord(taxiPed, taxiVeh, Px, Py, Pz, 26.0, 0, GetEntityModel(taxiVeh), 411, 10.0)
+			TaskVehicleDriveToCoord(taxiPed, taxiVeh, roadNode.x, roadNode.y, roadNode.z, 26.0, 0, GetEntityModel(taxiVeh), 411, 10.0)
 			SetPedKeepTask(taxiPed, true)
 		end
 	end
@@ -128,6 +129,7 @@ Citizen.CreateThread(function()
 							elseif DoesBlipExist(GetFirstBlipInfoId(8)) then
 								dx, dy, dz = table.unpack(Citizen.InvokeNative(0xFA7C7F0AADF25D09, GetFirstBlipInfoId(8), Citizen.ResultAsVector()))
 								z = getGroundZ(dx, dy, dz)
+								local __, roadNodeDest = GetClosestVehicleNode(dx, dy, dz, 1, 3.0, 0)
 
 								if IsControlJustPressed(1, 51) then
 									if not IsDestinationSet then
@@ -136,7 +138,7 @@ Citizen.CreateThread(function()
 									end
 
 									PlayAmbientSpeech1(taxiPed, "TAXID_BEGIN_JOURNEY", "SPEECH_PARAMS_FORCE_NORMAL")
-									TaskVehicleDriveToCoord(taxiPed, taxiVeh, dx, dy, z, 26.0, 0, GetEntityModel(taxiVeh), 411, 50.0)
+									TaskVehicleDriveToCoord(taxiPed, taxiVeh, roadNodeDest.x, roadNodeDest.y, z, 26.0, 0, GetEntityModel(taxiVeh), 411, 50.0)
 									SetPedKeepTask(taxiPed, true)
 								elseif IsControlJustPressed(1, 179) then
 									if not IsDestinationSet then
@@ -145,7 +147,7 @@ Citizen.CreateThread(function()
 									end
 
 									PlayAmbientSpeech1(taxiPed, "TAXID_SPEED_UP", "SPEECH_PARAMS_FORCE_NORMAL")
-									TaskVehicleDriveToCoord(taxiPed, taxiVeh, dx, dy, z, 29.0, 0, GetEntityModel(taxiVeh), 318, 50.0)
+									TaskVehicleDriveToCoord(taxiPed, taxiVeh, roadNodeDest.x, roadNodeDest.y, z, 29.0, 0, GetEntityModel(taxiVeh), 318, 50.0)
 									SetPedKeepTask(taxiPed, true)
 								elseif GetDistanceBetweenCoords(GetEntityCoords(playerPed, true), dx, dy, z, true) <= 53.0 then
 									if not parking then
