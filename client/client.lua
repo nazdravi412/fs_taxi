@@ -90,7 +90,7 @@ Citizen.CreateThread(function()
 							Wait(1)
 						end
 
-						TaskVehicleDriveToCoord(taxiPed, taxiVeh, Px, Py, Pz, 26.0, 0, GetEntityModel(taxiVeh), 411, 10.0)
+						TaskVehicleDriveToCoordLongrange(taxiPed, taxiVeh, Px, Py, Pz, 26.0, 0, GetEntityModel(taxiVeh), 411, 10.0)
 						SetPedKeepTask(taxiPed, true)
 					end
 				end
@@ -138,7 +138,9 @@ Citizen.CreateThread(function()
 									end
 
 									PlayAmbientSpeech1(taxiPed, "TAXID_BEGIN_JOURNEY", "SPEECH_PARAMS_FORCE_NORMAL")
-									TaskVehicleDriveToCoord(taxiPed, taxiVeh, roadNodeDest.x, roadNodeDest.y, z, 26.0, 0, GetEntityModel(taxiVeh), 411, 50.0)
+									SetDriverAbility(taxiPed, 1.0)
+									SetDriverAggressiveness(taxiPed, 0.0)
+									TaskVehicleDriveToCoordLongrange(taxiPed, taxiVeh, roadNodeDest.x, roadNodeDest.y, z, 26.0, 0, GetEntityModel(taxiVeh), 447, 50.0)
 									SetPedKeepTask(taxiPed, true)
 								elseif IsControlJustPressed(1, 179) then
 									if not IsDestinationSet then
@@ -147,7 +149,9 @@ Citizen.CreateThread(function()
 									end
 
 									PlayAmbientSpeech1(taxiPed, "TAXID_SPEED_UP", "SPEECH_PARAMS_FORCE_NORMAL")
-									TaskVehicleDriveToCoord(taxiPed, taxiVeh, roadNodeDest.x, roadNodeDest.y, z, 29.0, 0, GetEntityModel(taxiVeh), 318, 50.0)
+									SetDriverAbility(taxiPed, 1.0)
+									SetDriverAggressiveness(taxiPed, 1.0)
+									TaskVehicleDriveToCoordLongrange(taxiPed, taxiVeh, roadNodeDest.x, roadNodeDest.y, z, 29.0, 0, GetEntityModel(taxiVeh), 318, 50.0)
 									SetPedKeepTask(taxiPed, true)
 								elseif GetDistanceBetweenCoords(GetEntityCoords(playerPed, true), dx, dy, z, true) <= 53.0 then
 									if not parking then
